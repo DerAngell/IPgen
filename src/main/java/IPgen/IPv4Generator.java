@@ -77,7 +77,7 @@ public class IPv4Generator {
             FileWriter fileWriter = new FileWriter(this.IPList, append);
             int i = 0;
             int a,b,c,d;
-            for (a = fIP[0]; a <= lIP[0]; a++) {
+            for (a = fIP[0]; a < lIP[0]; a++) {
                     for (b = fIP[1]; b <= 255; b++) {
                         for (c = fIP[2]; c <= 255; c++) {
                             for (d = fIP[3]; d <= 255; d ++) {
@@ -92,7 +92,7 @@ public class IPv4Generator {
                     }
                     fIP[1] = 0;
                 }
-            for (b = 0; b <= lIP[1]; b++) {
+            for (b = 0; b < lIP[1]; b++) {
                 for (c = fIP[2]; c <= 255; c++) {
                     for (d = fIP[3]; d <= 255; d++) {
                         fileWriter.write("IP" + (IPN+i) + "; ");
@@ -104,7 +104,7 @@ public class IPv4Generator {
                 }
                 fIP[2] = 0;
             }
-            for (c = 0; c <= lIP[2]; c++) {
+            for (c = 0; c < lIP[2]; c++) {
                 for (d = fIP[3]; d <= 255; d++) {
                     fileWriter.write("IP" + (IPN+i) + "; ");
                     fileWriter.write(a + "." + b + "." + c + "." + d);
@@ -113,7 +113,7 @@ public class IPv4Generator {
                 }
                 fIP[3] = 0;
             }
-            for (d = 0; d <= lIP[4]; d++) {
+            for (d = 0; d <= lIP[3]; d++) {
                 fileWriter.write("IP" + (IPN+i) + "; ");
                 fileWriter.write(a + "." + b + "." + c + "." + d);
                 fileWriter.write("\n");
