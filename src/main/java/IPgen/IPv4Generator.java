@@ -80,7 +80,7 @@ public class IPv4Generator {
         try {
             FileWriter fileWriter = new FileWriter(this.IPList, append);
             int i = 0;
-                for (int a = fIP[0]; a <= 255; a++) {
+            for (int a = fIP[0]; a <= 255; a++) {
                     for (int b = fIP[1]; b <= 255; b++) {
                         for (int c = fIP[2]; c <= 255; c++) {
                             for (int d = fIP[3]; d <= 255; d ++) {
