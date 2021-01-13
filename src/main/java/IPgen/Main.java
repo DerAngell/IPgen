@@ -19,6 +19,7 @@ public class Main {
         char choice;
         String firstIP = "";
         String lastIP = "";
+        String netmask = "";
 
         // interactive dialog if there is no args --------------------------------------------------------------------
         {
@@ -26,6 +27,7 @@ public class Main {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("1 - Generate list by the first IP and count of IPs\n" +
                         "2 - Generate list by IP range\n" +
+                        "3 - Generate list by IP and full subnet\n" +
                         "q - quit\n");
                 boolean loop = true;
                 while (loop) {
@@ -61,6 +63,22 @@ public class Main {
                             lastIP = scan.next();
                             gen = new IPv4Generator(filename, append, IPN);
                             gen.genRange(firstIP, lastIP);
+                            loop = false;
+                            break;
+                        case '3':
+                            System.out.println("Enter the IPList filename: ");
+                            filename = scan.next();
+                            System.out.println("Append (y/n)? ");
+                            appnd = scan.next();
+                            append = appnd.contains("y") || appnd.contains("Y");
+                            System.out.println("Enter the first IP ID: ");
+                            IPN = scan.nextInt();
+                            System.out.println("Enter IP: ");
+                            firstIP = scan.next();
+                            System.out.println("Enter the netmask: ");
+                            netmask = scan.next();
+                            gen = new IPv4Generator(filename, append, IPN);
+                            gen.genFullSubnet(firstIP, netmask);
                             loop = false;
                             break;
                         case 'q':
@@ -100,6 +118,14 @@ public class Main {
                     if ((args[i].equals("--last") || args[i].equals("-l")) && args.length > i+1) {
                         lastIP = args[i+1];
                     }
+                    // --netmask [n] - netmask (by full netmask)
+                    if ((args[i].equals("--netmask") || args[i].equals("-n")) && args.length > i+1) {
+                        netmask = args[i+1];
+                    }
+                    // --ip [-i] - first IP (only for bynumber)
+                    if ((args[i].equals("--ip") || args[i].equals("-p")) && args.length > i+1) {
+                        firstIP = args[i+1];
+                    }
                 }
             }
 
@@ -115,6 +141,15 @@ public class Main {
                 gen.genRange(firstIP, lastIP);
             }
 
+            // byfullmask
+            if (args[0].equals("byfullmask")) {
+                IPv4Generator gen = new IPv4Generator(filename, append, IPN);
+                gen.genRange(firstIP, netmask);
+            }
+
+
+
+
             //TOCOMPLETE
             // help
             if (args[0].equals("--help") || args[0].equals("-h")) {
@@ -126,7 +161,10 @@ public class Main {
                         "--count [-c] <N> number of IPs\n\n" +
                         "byrange - generate IP list by first and last IPs\n" +
                         "--first [-s] - first IP\n" +
-                        "--last [-l] - last IP\n"
+                        "--last [-l] - last IP\n" +
+                        "byfullmask - generate IP list by IP and full netmask\n" +
+                                "--ip [-i] - IP\n" +
+                                "--netmask [-n] - netmask\n"
                 );
             }
 
