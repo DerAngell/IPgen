@@ -1,8 +1,9 @@
 package IPgen;
 
-/*
-TODO IPv6 generator (new class)
-*/
+
+//TODO IPv6 generator (new class)
+
+
 
 
 import java.util.Scanner;
@@ -17,12 +18,14 @@ public class Main {
         int count=0;
         char choice;
         String firstIP = "";
+        String lastIP = "";
 
         // interactive dialog if there is no args --------------------------------------------------------------------
         {
             if (args.length == 0) {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("1 - Generate list by the first IP and count of IPs\n" +
+                        "2 - Generate list by IP range\n" +
                         "q - quit\n");
                 boolean loop = true;
                 while (loop) {
@@ -42,6 +45,22 @@ public class Main {
                             count = scan.nextInt();
                             IPv4Generator gen = new IPv4Generator(filename, append, IPN);
                             gen.genNIPs(firstIP, count);
+                            loop = false;
+                            break;
+                        case '2':
+                            System.out.println("Enter the IPList filename: ");
+                            filename = scan.next();
+                            System.out.println("Append (y/n)? ");
+                            appnd = scan.next();
+                            append = appnd.contains("y") || appnd.contains("Y");
+                            System.out.println("Enter the first IP ID: ");
+                            IPN = scan.nextInt();
+                            System.out.println("Enter the first IP: ");
+                            firstIP = scan.next();
+                            System.out.println("Enter the last IP: ");
+                            lastIP = scan.next();
+                            gen = new IPv4Generator(filename, append, IPN);
+                            gen.genRange(firstIP, lastIP);
                             loop = false;
                             break;
                         case 'q':
@@ -77,6 +96,10 @@ public class Main {
                     if ((args[i].equals("--first") || args[i].equals("-s")) && args.length > i+1) {
                         firstIP = args[i+1];
                     }
+                    // --last [l] - last IP (by Range)
+                    if ((args[i].equals("--last") || args[i].equals("-l")) && args.length > i+1) {
+                        lastIP = args[i+1];
+                    }
                 }
             }
 
@@ -84,6 +107,12 @@ public class Main {
             if (args[0].equals("bynumber")) {
                 IPv4Generator gen = new IPv4Generator(filename, append, IPN);
                 gen.genNIPs(firstIP, count);
+            }
+
+            // byrange
+            if (args[0].equals("byrange")) {
+                IPv4Generator gen = new IPv4Generator(filename, append, IPN);
+                gen.genRange(firstIP, lastIP);
             }
 
             //TOCOMPLETE
@@ -94,9 +123,14 @@ public class Main {
                         "\nModes:\n" +
                         "bynumber - generates IP list by first IP and number of IPs\n" +
                         "--first [-s] - first IP\n" +
-                        "--count [-c] <N> number of IPs\n"
+                        "--count [-c] <N> number of IPs\n\n" +
+                        "byrange - generate IP list by first and last IPs\n" +
+                        "--first [-s] - first IP\n" +
+                        "--last [-l] - last IP\n"
                 );
             }
+
+
 
         }
         // TODO input verification

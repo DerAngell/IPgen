@@ -20,7 +20,6 @@ public class IPv4Generator {
 
     }
 
-    // TODO generate range of IPs
     // TODO generate subnet
 
     //Constructor initiates file
@@ -68,6 +67,8 @@ public class IPv4Generator {
             var5.printStackTrace();
         }
     }
+
+//fixme
 //---------------------------------------------------------------------------------------------------------------------
 // generate by range of IPs--------------------------------------------------------------------------------------------
     public void genRange (String firstIP, String lastIP) {
@@ -86,13 +87,13 @@ public class IPv4Generator {
                                 fileWriter.write("\n");
                                 i++;
                             }
-                            fIP[3] = 0;
+                             fIP[3] = 0;
                         }
-                        fIP[2] = 0;
+                         fIP[2] = 0;
                     }
-                    fIP[1] = 0;
+                     fIP[1] = 0;
                 }
-            for (b = 0; b < lIP[1]; b++) {
+            for (b = fIP[1]; b < lIP[1]; b++) {
                 for (c = fIP[2]; c <= 255; c++) {
                     for (d = fIP[3]; d <= 255; d++) {
                         fileWriter.write("IP" + (IPN+i) + "; ");
@@ -102,9 +103,9 @@ public class IPv4Generator {
                     }
                     fIP[3] = 0;
                 }
-                fIP[2] = 0;
+               fIP[2] = 0;
             }
-            for (c = 0; c < lIP[2]; c++) {
+            for (c = fIP[2]; c < lIP[2]; c++) {
                 for (d = fIP[3]; d <= 255; d++) {
                     fileWriter.write("IP" + (IPN+i) + "; ");
                     fileWriter.write(a + "." + b + "." + c + "." + d);
@@ -113,7 +114,7 @@ public class IPv4Generator {
                 }
                 fIP[3] = 0;
             }
-            for (d = 0; d <= lIP[3]; d++) {
+            for (d = fIP[3]; d <= lIP[3]; d++) {
                 fileWriter.write("IP" + (IPN+i) + "; ");
                 fileWriter.write(a + "." + b + "." + c + "." + d);
                 fileWriter.write("\n");
