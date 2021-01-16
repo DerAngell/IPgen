@@ -1,5 +1,6 @@
 package IPgen;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,23 +18,22 @@ public class IPv4Generator {
             IP[i] = Integer.parseInt(stringIP[i]);
         }
         return IP;
-
     }
+
 
    // gen by range via int[] (method for genRange and genFullSubnet)
     protected void genrangeInt (int[] fIP, int[] lIP) {
 
         try {
             FileWriter fileWriter = new FileWriter(this.IPList, append);
+            BufferedWriter bf = new BufferedWriter(fileWriter);
             int i = 0;
             int a,b,c,d;
             for (a = fIP[0]; a < lIP[0]; a++) {
                 for (b = fIP[1]; b <= 255; b++) {
                     for (c = fIP[2]; c <= 255; c++) {
                         for (d = fIP[3]; d <= 255; d ++) {
-                            fileWriter.write("IP" + (IPN+i) + "; ");
-                            fileWriter.write(a + "." + b + "." + c + "." + d);
-                            fileWriter.write("\n");
+                            bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
                             i++;
                         }
                         fIP[3] = 0;
@@ -41,36 +41,54 @@ public class IPv4Generator {
                     fIP[2] = 0;
                 }
                 fIP[1] = 0;
+                if (i % 1000000 == 0) {
+                    bf.flush();
+                    bf.close();
+                    fileWriter = new FileWriter(this.IPList, true);
+                    bf = new BufferedWriter(fileWriter);
+                }
             }
             for (b = fIP[1]; b < lIP[1]; b++) {
                 for (c = fIP[2]; c <= 255; c++) {
                     for (d = fIP[3]; d <= 255; d++) {
-                        fileWriter.write("IP" + (IPN+i) + "; ");
-                        fileWriter.write(a + "." + b + "." + c + "." + d);
-                        fileWriter.write("\n");
+                        bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
                         i++;
                     }
                     fIP[3] = 0;
                 }
                 fIP[2] = 0;
+                if (i % 1000000 == 0) {
+                    bf.flush();
+                    bf.close();
+                    fileWriter = new FileWriter(this.IPList, true);
+                    bf = new BufferedWriter(fileWriter);
+                }
             }
             for (c = fIP[2]; c < lIP[2]; c++) {
                 for (d = fIP[3]; d <= 255; d++) {
-                    fileWriter.write("IP" + (IPN+i) + "; ");
-                    fileWriter.write(a + "." + b + "." + c + "." + d);
-                    fileWriter.write("\n");
+                    bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
                     i++;
                 }
                 fIP[3] = 0;
+                if (i % 1000000 == 0) {
+                    bf.flush();
+                    bf.close();
+                    fileWriter = new FileWriter(this.IPList, true);
+                    bf = new BufferedWriter(fileWriter);
+                }
             }
             for (d = fIP[3]; d <= lIP[3]; d++) {
-                fileWriter.write("IP" + (IPN+i) + "; ");
-                fileWriter.write(a + "." + b + "." + c + "." + d);
-                fileWriter.write("\n");
+                bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
+                if (i % 1000000 == 0) {
+                    bf.flush();
+                    bf.close();
+                    fileWriter = new FileWriter(this.IPList, true);
+                    bf = new BufferedWriter(fileWriter);
+                }
                 i++;
             }
-            fileWriter.flush();
-            fileWriter.close();
+            bf.flush();
+            bf.close();
         } catch (IOException var5) {
             var5.printStackTrace();
         }
@@ -89,6 +107,7 @@ public class IPv4Generator {
        int[] IP = parseIP(firstIP);
        try {
             FileWriter fileWriter = new FileWriter(this.IPList, append);
+            BufferedWriter bf = new BufferedWriter(fileWriter);
             int i = 0;
             while (i < count) {
                 for (int a = IP[0]; a <= 255; a++) {
@@ -96,9 +115,7 @@ public class IPv4Generator {
                         for (int c = IP[2]; c <= 255; c++) {
                             for (int d = IP[3]; d <= 255; d ++) {
                                 if (i >= count) break;
-                                fileWriter.write("IP" + (IPN+i) + "; ");
-                                fileWriter.write(a + "." + b + "." + c + "." + d);
-                                fileWriter.write("\n");
+                                bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
                                 i++;
                             }
                             if (i >= count) break;
@@ -110,9 +127,15 @@ public class IPv4Generator {
                     if (i >= count) break;
                     IP[1] = 0;
                 }
+                if (i % 1000000 == 0) {
+                    bf.flush();
+                    bf.close();
+                    fileWriter = new FileWriter(this.IPList, true);
+                    bf = new BufferedWriter(fileWriter);
+                }
             }
-            fileWriter.flush();
-            fileWriter.close();
+            bf.flush();
+            bf.close();
         } catch (IOException var5) {
             var5.printStackTrace();
         }
