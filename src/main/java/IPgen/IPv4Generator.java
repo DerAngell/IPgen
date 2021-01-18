@@ -43,9 +43,6 @@ public class IPv4Generator {
                 fIP[1] = 0;
                 if (i % 1000000 == 0) {
                     bf.flush();
-                    bf.close();
-                    fileWriter = new FileWriter(this.IPList, true);
-                    bf = new BufferedWriter(fileWriter);
                 }
             }
             for (b = fIP[1]; b < lIP[1]; b++) {
@@ -59,9 +56,6 @@ public class IPv4Generator {
                 fIP[2] = 0;
                 if (i % 1000000 == 0) {
                     bf.flush();
-                    bf.close();
-                    fileWriter = new FileWriter(this.IPList, true);
-                    bf = new BufferedWriter(fileWriter);
                 }
             }
             for (c = fIP[2]; c < lIP[2]; c++) {
@@ -72,18 +66,12 @@ public class IPv4Generator {
                 fIP[3] = 0;
                 if (i % 1000000 == 0) {
                     bf.flush();
-                    bf.close();
-                    fileWriter = new FileWriter(this.IPList, true);
-                    bf = new BufferedWriter(fileWriter);
                 }
             }
             for (d = fIP[3]; d <= lIP[3]; d++) {
                 bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
                 if (i % 1000000 == 0) {
                     bf.flush();
-                    bf.close();
-                    fileWriter = new FileWriter(this.IPList, true);
-                    bf = new BufferedWriter(fileWriter);
                 }
                 i++;
             }
@@ -129,9 +117,6 @@ public class IPv4Generator {
                 }
                 if (i % 1000000 == 0) {
                     bf.flush();
-                    bf.close();
-                    fileWriter = new FileWriter(this.IPList, true);
-                    bf = new BufferedWriter(fileWriter);
                 }
             }
             bf.flush();
