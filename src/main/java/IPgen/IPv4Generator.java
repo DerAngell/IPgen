@@ -21,66 +21,6 @@ public class IPv4Generator {
     }
 
 
-   // gen by range via int[] (method for genRange and genFullSubnet)
-    protected void genrangeInt (int[] fIP, int[] lIP) {
-
-        try {
-            FileWriter fileWriter = new FileWriter(this.IPList, append);
-            BufferedWriter bf = new BufferedWriter(fileWriter);
-            int i = 0;
-            int a,b,c,d;
-            for (a = fIP[0]; a < lIP[0]; a++) {
-                for (b = fIP[1]; b <= 255; b++) {
-                    for (c = fIP[2]; c <= 255; c++) {
-                        for (d = fIP[3]; d <= 255; d ++) {
-                            bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
-                            i++;
-                        }
-                        fIP[3] = 0;
-                    }
-                    fIP[2] = 0;
-                }
-                fIP[1] = 0;
-                if (i % 1000000 == 0) {
-                    bf.flush();
-                }
-            }
-            for (b = fIP[1]; b < lIP[1]; b++) {
-                for (c = fIP[2]; c <= 255; c++) {
-                    for (d = fIP[3]; d <= 255; d++) {
-                        bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
-                        i++;
-                    }
-                    fIP[3] = 0;
-                }
-                fIP[2] = 0;
-                if (i % 1000000 == 0) {
-                    bf.flush();
-                }
-            }
-            for (c = fIP[2]; c < lIP[2]; c++) {
-                for (d = fIP[3]; d <= 255; d++) {
-                    bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
-                    i++;
-                }
-                fIP[3] = 0;
-                if (i % 1000000 == 0) {
-                    bf.flush();
-                }
-            }
-            for (d = fIP[3]; d <= lIP[3]; d++) {
-                bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
-                if (i % 1000000 == 0) {
-                    bf.flush();
-                }
-                i++;
-            }
-            bf.flush();
-            bf.close();
-        } catch (IOException var5) {
-            var5.printStackTrace();
-        }
-    }
 
     //Constructor initiates file
     public IPv4Generator(String fileName, boolean append, int IPN) {
@@ -131,7 +71,8 @@ public class IPv4Generator {
     public void genRange (String firstIP, String lastIP) {
         int[] fIP = parseIP(firstIP);
         int[] lIP = parseIP(lastIP);
-        genrangeInt(fIP, lIP);
+        int cout = 1 + (lIP[3]-fIP[3]) + 256*(lIP[2]-fIP[2]) + 256*256*(lIP[1]-fIP[1]) + 256*256*256*(lIP[0]-fIP[0]);
+        genNIPs(firstIP, cout);
     }
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -145,7 +86,7 @@ public class IPv4Generator {
             fIP[i] = IParr[i] & netmaskArr[i];
             lIP[i] = fIP[i] + (255 - netmaskArr[i]);
         } fIP[3]++; lIP[3]--;
-        genrangeInt(fIP, lIP);
+        genRange(fIP[0]+"."+fIP[1]+"."+fIP[2]+"."+fIP[3], lIP[0]+"."+lIP[1]+"."+lIP[2]+"."+lIP[3]);
     }
 //---------------------------------------------------------------------------------------------------------------------
 }
