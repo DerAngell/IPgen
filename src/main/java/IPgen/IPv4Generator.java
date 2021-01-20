@@ -43,7 +43,7 @@ public class IPv4Generator {
                         for (int c = IP[2]; c <= 255; c++) {
                             for (int d = IP[3]; d <= 255; d ++) {
                                 if (i >= count) break;
-                                bf.write("IP" + (IPN+i) + "; " + a + "." + b + "." + c + "." + d + "\n");
+                                bf.write("IP" + (IPN+i) + ";" + a + "." + b + "." + c + "." + d + "\n");
                                 i++;
                             }
                             if (i >= count) break;
