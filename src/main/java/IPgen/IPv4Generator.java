@@ -20,8 +20,6 @@ public class IPv4Generator {
         return IP;
     }
 
-
-
     //Constructor initiates file
     public IPv4Generator(String fileName, boolean append, int IPN) {
         IPList = new File(fileName);
@@ -29,11 +27,9 @@ public class IPv4Generator {
         this.IPN = IPN;
     }
 
-
-// generate IPList by first IP and a number of IPs --------------------------------------------------------------------
-    public void genNIPs(String firstIP, int count) {
-       int[] IP = parseIP(firstIP);
-       try {
+    // gen IPs by int[] and count
+    protected void genInt(int[] IP, int count) {
+        try {
             FileWriter fileWriter = new FileWriter(this.IPList, append);
             BufferedWriter bf = new BufferedWriter(fileWriter);
             int i = 0;
@@ -66,13 +62,19 @@ public class IPv4Generator {
         }
     }
 
+// generate IPList by first IP and a number of IPs --------------------------------------------------------------------
+    public void genNIPs(String firstIP, int count) {
+       int[] IP = parseIP(firstIP);
+       genInt(IP, count);
+    }
+
 //---------------------------------------------------------------------------------------------------------------------
 // generate by range of IPs--------------------------------------------------------------------------------------------
     public void genRange (String firstIP, String lastIP) {
         int[] fIP = parseIP(firstIP);
         int[] lIP = parseIP(lastIP);
-        int cout = 1 + (lIP[3]-fIP[3]) + 256*(lIP[2]-fIP[2]) + 256*256*(lIP[1]-fIP[1]) + 256*256*256*(lIP[0]-fIP[0]);
-        genNIPs(firstIP, cout);
+        int count = 1 + (lIP[3]-fIP[3]) + 256*(lIP[2]-fIP[2]) + 256*256*(lIP[1]-fIP[1]) + 256*256*256*(lIP[0]-fIP[0]);
+        genInt(fIP, count);
     }
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +88,8 @@ public class IPv4Generator {
             fIP[i] = IParr[i] & netmaskArr[i];
             lIP[i] = fIP[i] + (255 - netmaskArr[i]);
         } fIP[3]++; lIP[3]--;
-        genRange(fIP[0]+"."+fIP[1]+"."+fIP[2]+"."+fIP[3], lIP[0]+"."+lIP[1]+"."+lIP[2]+"."+lIP[3]);
+        int count = 1 + (lIP[3]-fIP[3]) + 256*(lIP[2]-fIP[2]) + 256*256*(lIP[1]-fIP[1]) + 256*256*256*(lIP[0]-fIP[0]);
+        genInt(fIP, count);
     }
 //---------------------------------------------------------------------------------------------------------------------
 }
