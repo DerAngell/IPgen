@@ -147,7 +147,10 @@ public class Main {
                 gen.genRange(firstIP, netmask);
             }
 
-
+            if (args[0].equals("--test")) {
+                IPv4Generator gentest = new IPv6Generator("testv6.txt", false, 1);
+                gentest.genNIPs("A:0:0:0:0:0:0:1", 1000000);
+            }
 
 
             //TOCOMPLETE

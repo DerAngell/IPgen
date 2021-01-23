@@ -22,9 +22,16 @@ public class IPv4Generator {
 
     //Constructor initiates file
     public IPv4Generator(String fileName, boolean append, int IPN) {
-        IPList = new File(fileName);
+        this.IPList = new File(fileName);
         this.append = append;
         this.IPN = IPN;
+    }
+
+    //Default constructor
+    public IPv4Generator() {
+        this.IPList = null;
+        this.append = false;
+        this.IPN = 1;
     }
 
     // gen IPs by int[] and count
@@ -40,6 +47,9 @@ public class IPv4Generator {
                             for (int d = IP[3]; d <= 255; d ++) {
                                 if (i >= count) break;
                                 bf.write("IP" + (IPN+i) + ";" + a + "." + b + "." + c + "." + d + "\n");
+                                if (i % 1000000 == 0) {
+                                    bf.flush();
+                                }
                                 i++;
                             }
                             if (i >= count) break;
@@ -50,9 +60,6 @@ public class IPv4Generator {
                     }
                     if (i >= count) break;
                     IP[1] = 0;
-                }
-                if (i % 1000000 == 0) {
-                    bf.flush();
                 }
             }
             bf.flush();
