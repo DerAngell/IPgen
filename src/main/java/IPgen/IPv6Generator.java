@@ -15,15 +15,16 @@ public class IPv6Generator extends IPv4Generator {
     * int IPN;
     * */
 
-    //constructor
+//constructor----------------------------------------------------------------------------------------------------------
     public IPv6Generator (String fileName, boolean append, int IPN) {
         this.IPList = new File(fileName);
         this.append = append;
         this.IPN = IPN;
     }
+//---------------------------------------------------------------------------------------------------------------------
 
 
-    // parse IPs amd mask from string to int[]
+// parse IPs amd mask from string to int[]-----------------------------------------------------------------------------
     @Override
     protected int[] parseIP(String ip) {
         int[] IP = new int[8]; // IPv4 IP[0]:IP[1]:IP[2]:IP[3]:IP[4]:IP[5]:IP[6]:IP[7]
@@ -33,8 +34,9 @@ public class IPv6Generator extends IPv4Generator {
         }
         return IP;
     }
+//---------------------------------------------------------------------------------------------------------------------
 
-    // gen IPs by int[] and count
+// gen IPs by int[] and count------------------------------------------------------------------------------------------
     @Override
     protected void genInt(int[] IP, int count) {
         try {
@@ -94,6 +96,7 @@ public class IPv6Generator extends IPv4Generator {
             var5.printStackTrace();
         }
     }
+//---------------------------------------------------------------------------------------------------------------------
 
     @Override
     public void genRange (String firstIP, String lastIP) {
@@ -359,11 +362,13 @@ public class IPv6Generator extends IPv4Generator {
             var5.printStackTrace();
         }
     }
+//---------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void genFullSubnet (String IP, String netmask) {
+    public void genFullMask(String IP, String netmask) {
         System.out.println("netmask is not supported for IPv6");
     }
+//---------------------------------------------------------------------------------------------------------------------
 
 
 }

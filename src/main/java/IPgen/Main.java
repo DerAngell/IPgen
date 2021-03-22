@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String filename = ""; // filename for IP list
         boolean append = false; // append or rewrite
         int IPN = 1; // the first IP №
@@ -78,7 +78,7 @@ public class Main {
                             System.out.println("Enter the netmask: ");
                             netmask = scan.next();
                             gen = new IPv4Generator(filename, append, IPN);
-                            gen.genFullSubnet(firstIP, netmask);
+                            gen.genFullMask(firstIP, netmask);
                             loop = false;
                             break;
                         case 'q':
@@ -147,10 +147,10 @@ public class Main {
                 gen.genRange(firstIP, netmask);
             }
 
-//             if (args[0].equals("--test")) {
-//                IPv4Generator gentest = new IPv6Generator("testv6.txt", false, 1);
-//                gentest.genRange("B:1:1:1:1:2:ffff:ffff", "B:1:1:1:1:3:3:2");
-//            }
+             if (args[0].equals("--test")) {
+                IPv4Generator gentest = new IPv4Generator("testpref.txt", false, 1);
+                gentest.genPrefix("10.1.1.1/24");
+            }
 
 
             //TOCOMPLETE
